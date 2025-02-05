@@ -1,12 +1,25 @@
-import * as main from '../main';
 import { markup } from '/js/render-functions';
 import { removeLoadStroke } from '/js/render-functions';
 import axios from 'axios';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import errorIcon from '../img/error.svg';
 
+const box = document.querySelector('.gallery');
+const load = document.querySelector('.load');
+const addMoreButton = document.querySelector('.add-more-button');
+const iziOption = {
+  messageColor: '#FAFAFB',
+  messageSize: '16px',
+  backgroundColor: '#EF4040',
+  iconUrl: errorIcon,
+  transitionIn: 'bounceInLeft',
+  position: 'topRight',
+  displayMode: 'replace',
+  closeOnClick: true,
+};
 let page = 1;
-let perPage = 15;
+let perPage = 150;
 
 export function resetPage() {
   page = 1;
@@ -19,9 +32,9 @@ function endOfList(daddyElement) {
   removeLoadStroke(daddyElement);
   daddyElement.insertAdjacentHTML(
     'beforeend',
-    '<p class="loading-text">We\'re sorry, but you\'ve reached the end of search results.</p>'
+    '<p class="loading-text">We\'re sorry, but you\'ve reached the end of search results .</p>'
   );
-  main.addMoreButton.classList.add('hide');
+  addMoreButton.classList.add('hide');
 }
 
 export async function getImage(input) {
@@ -42,7 +55,7 @@ export async function getImage(input) {
     const { data } = await axios.get(URL);
     markup(data);
     if (data.totalHits < page * perPage) {
-      endOfList(main.load);
+      endOfList(load);
       return;
     }
     if (page >= 2) {
@@ -55,10 +68,10 @@ export async function getImage(input) {
     }
   } catch (error) {
     console.error(error);
-    main.box.innerHTML = '';
-    main.load.innerHTML = '';
+    box.innerHTML = '';
+    load.innerHTML = '';
     iziToast.show({
-      ...main.iziOption,
+      ...iziOption,
       message: 'Sorry, an error happened. Try again',
     });
     return;

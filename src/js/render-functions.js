@@ -2,7 +2,29 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import * as main from '../main';
+import errorIcon from '../img/error.svg';
+
+const box = document.querySelector('.gallery');
+const load = document.querySelector('.load');
+const addMoreButton = document.querySelector('.add-more-button');
+const iziOption = {
+  messageColor: '#FAFAFB',
+  messageSize: '16px',
+  backgroundColor: '#EF4040',
+  iconUrl: errorIcon,
+  transitionIn: 'bounceInLeft',
+  position: 'topRight',
+  displayMode: 'replace',
+  closeOnClick: true,
+};
+
+export function addLoadStroke(daddyElement) {
+  daddyElement.insertAdjacentHTML(
+    'beforeend',
+    '<p class="loading-text">Wait, the image is loaded</p><span class="loader"></span>'
+  );
+  addMoreButton.classList.add('hide');
+}
 
 export function removeLoadStroke(daddyElement) {
   const textElement = daddyElement.querySelector('.loading-text');
@@ -11,7 +33,7 @@ export function removeLoadStroke(daddyElement) {
   if (textElement) textElement.remove();
   if (loaderElement) loaderElement.remove();
 
-  main.addMoreButton.classList.remove('hide');
+  addMoreButton.classList.remove('hide');
 }
 
 export function markup(data) {
@@ -19,11 +41,11 @@ export function markup(data) {
 
   if (hits.length === 0) {
     iziToast.show({
-      ...main.iziOption,
+      ...iziOption,
       message:
         'Sorry, there are no images matching your search query. Please, try again!',
     });
-    main.box.innerHTML = '';
+    box.innerHTML = '';
 
     return;
   }
@@ -47,8 +69,8 @@ export function markup(data) {
       </li>`
     )
     .join(' ');
-  removeLoadStroke(main.load);
-  main.box.insertAdjacentHTML('beforeend', markup);
+  removeLoadStroke(load);
+  box.insertAdjacentHTML('beforeend', markup);
 
   const lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',

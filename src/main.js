@@ -1,11 +1,12 @@
 import { getImage } from './js/pixabay-api';
 import { resetPage } from './js/pixabay-api';
 import { addPage } from './js/pixabay-api';
+import { addLoadStroke } from './js/render-functions';
 import errorIcon from './img/error.svg';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-export const iziOption = {
+const iziOption = {
   messageColor: '#FAFAFB',
   messageSize: '16px',
   backgroundColor: '#EF4040',
@@ -16,19 +17,11 @@ export const iziOption = {
   closeOnClick: true,
 };
 
-export const box = document.querySelector('.gallery');
-export const load = document.querySelector('.load');
-export const addMoreButton = document.querySelector('.add-more-button');
+const box = document.querySelector('.gallery');
+const load = document.querySelector('.load');
+const addMoreButton = document.querySelector('.add-more-button');
 const form = document.querySelector('.form');
 const input = document.querySelector('.user-input');
-
-function addLoadStroke(daddyElement) {
-  daddyElement.insertAdjacentHTML(
-    'beforeend',
-    '<p class="loading-text">Wait, the image is loaded</p><span class="loader"></span>'
-  );
-  addMoreButton.classList.add('hide');
-}
 
 form.addEventListener('submit', event => {
   event.preventDefault();
