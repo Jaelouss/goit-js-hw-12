@@ -19,7 +19,7 @@ const iziOption = {
   closeOnClick: true,
 };
 let page = 1;
-let perPage = 150;
+let perPage = 15;
 
 export function resetPage() {
   page = 1;

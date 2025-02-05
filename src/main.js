@@ -6,6 +6,11 @@ import errorIcon from './img/error.svg';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
+const box = document.querySelector('.gallery');
+const load = document.querySelector('.load');
+const addMoreButton = document.querySelector('.add-more-button');
+const form = document.querySelector('.form');
+const input = document.querySelector('.user-input');
 const iziOption = {
   messageColor: '#FAFAFB',
   messageSize: '16px',
@@ -16,12 +21,6 @@ const iziOption = {
   displayMode: 'replace',
   closeOnClick: true,
 };
-
-const box = document.querySelector('.gallery');
-const load = document.querySelector('.load');
-const addMoreButton = document.querySelector('.add-more-button');
-const form = document.querySelector('.form');
-const input = document.querySelector('.user-input');
 
 form.addEventListener('submit', event => {
   event.preventDefault();
